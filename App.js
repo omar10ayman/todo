@@ -1,20 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import StackNavi from './pages/StackNavi';
+import DonePages from './pages/DonePages';
+import { Provider } from 'react-redux';
+import store from './store';
+import UnDonePages from './pages/UnDonePages';
+const Tab= createBottomTabNavigator()
 export default function App() {
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+  <Provider store={store}>
+     <NavigationContainer>
+    <Tab.Navigator initialRouteName='main'  >
+      <Tab.Screen options={{
+      headerBackButtonMenuEnabled: true,
+      title:"ToDo App",
+      headerTitleAlign: 'center',
+      headerTitleStyle:{
+        fontSize:25
+      }
+      }}  name='main' component={StackNavi}/>
+      <Tab.Screen options={{
+      headerBackButtonMenuEnabled: true,
+      title:"Done Tasks",
+      headerTitleAlign: 'center',
+      headerTitleStyle:{
+        fontSize:25
+      }
+      }}   name='done' component={DonePages}/>
+      <Tab.Screen options={{
+      headerBackButtonMenuEnabled: true,
+      title:"Undone Tasks",
+      headerTitleAlign: 'center',
+      headerTitleStyle:{
+        fontSize:25
+      }
+      }} 
+       name='undone' component={UnDonePages}/>
+    </Tab.Navigator>
+   </NavigationContainer>  
+  </Provider>  
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
